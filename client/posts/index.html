@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="../stylesheets/reset.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../stylesheets/main.css"/>
-    <script type="text/javascript" src="../js/writePosts.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -45,20 +44,18 @@
 </header>
 <main class="container">
     <div class="row">
-        <article class="col-8" id="main">
+        <section class="col-8" id="main">
             <h2>Main Feed</h2>
-            <div id="main-feed">
+            <section id="main-feed">
 
-            </div>
-        </article>
-        <article class="col-4" id="right-side">
-            <section id="trending">
-                <h3>Trending Posts</h3>
-                <div id="trending-posts">
-
-                </div>
             </section>
-        </article>
+        </section>
+        <aside class="col-4" id="right-side">
+            <h3>Trending Posts</h3>
+            <section id="trending">
+
+            </section>
+        </aside>
     </div>
 </main>
 <footer>
@@ -69,10 +66,10 @@
     var main = '';
     for (var i=0; i<20; i++)
     {
-        main += "<div class='entry'><a href='show.html'>";
+        main += "<article class='entry'><a href='show.html'>";
         main += "<p class='main-title'><strong>Title " + i + "</strong></p>"
         main += "<p class='main-body'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin justo. Morbi semper ipsum semper nunc rutrum sodales. </p>"
-        main += "</a></div>";
+        main += "</a></article>";
     }
     document.getElementById("main-feed").innerHTML = main;
 
@@ -80,11 +77,11 @@
     var trending = '';
     for(var j=0; j< 5; j++)
     {
-        trending += "<a href='show.html' class='entry'>";
+        trending += "<article class='entry'><a href='show.html'>";
         trending += "<p class='trending-title'><strong>Title " + j + "</strong></p>"
         trending += "<p class='trending-body'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin justo. Morbi semper ipsum semper nunc rutrum sodales. </p>"
-        trending += "</a>";
+        trending += "</a></article>";
     }
-    document.getElementById("trending-posts").innerHTML = trending;
+    document.getElementById("trending").innerHTML = trending;
 </script>
 </html>
