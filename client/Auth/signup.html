@@ -2,9 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Signup</title>
 </head>
 <body>
-
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Mates & Posts</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="create.html">Create Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin/stats.html">Admin Stats</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        User Name
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="../profile.html">Profile</a>
+                        <a class="dropdown-item" href="#">Logout</a>
+                        <a class="dropdown-item" href="#">Settings</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<form method="post" action="http://randyconnolly.com/tests/process.php" onsubmit="return validateNewUser()">
+	<fieldset>
+	<legend>New User</legend>
+		<p>
+			<label>First Name</label>
+			<input type="text" name="fname" id="fname" />
+		</p>
+		<p>
+			<label>Last Name</label>
+			<input type="text" name="lname" id="lname" />
+		</p>
+		<p>
+			<label>Email</label>
+			<input type="text" name="email" id="email"/>
+		</p>
+		<p>
+			<label>Password</label>
+			<input type="password" name="pass" id="pass" />
+		</p>
+		<p>
+			<label>Re-enter Password</label>
+			<input type="password" name="rpass" id="rpass" />
+		</p>
+		<button type="submit">Signup</button>
+		<a href="login.html">Have an account?</a>
+	</fieldset>
+</form>
 </body>
 </html>
