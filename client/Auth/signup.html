@@ -42,7 +42,7 @@
         </div>
     </nav>
 </header>
-<form method="post" action="http://randyconnolly.com/tests/process.php" onsubmit="return validateNewUser()">
+<form name="signupform"  method="post" action="http://randyconnolly.com/tests/process.php" onsubmit="return validateNewUser()">
 	<fieldset>
 	<legend>New User</legend>
 		<p>
@@ -55,7 +55,7 @@
 		</p>
 		<p>
 			<label>Birthday</label>
-			<input type="date" name="birth" id="birth"/>
+			<input type="datetime" name="birth" id="birth"/>
 		</p>
 		<p>
 			<label>Email</label>
