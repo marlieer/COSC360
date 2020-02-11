@@ -52,7 +52,7 @@
     </nav>
 </header>
 <main>
-    <section class="container post">
+    <section class="post">
         <div class="post-meta-info">
             <h1 class="post-title">Ipsem Title</h1>
             <p><a class="post-category" href="#">#Rubish</a></p>
@@ -69,9 +69,16 @@
             </p>
         </div>
     </section>
-    <section class="container comments">
+    <section class="comments">
         <div id="comments">
 
+        </div>
+        <div class="make-comment">
+            <form method="post" action="#">
+                <label for="new_comment">Make a Comment</label>
+                <textarea id="new_comment" class="comment-text" name="comment"></textarea>
+                <button class="comment-post btn" type="submit">post</button>
+            </form>
         </div>
     </section>
 </main>
