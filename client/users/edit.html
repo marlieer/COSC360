@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Profile</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" type="text/css" href="../stylesheets/reset.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../stylesheets/main.css"/>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../js/signin_validation. js"></script>
 </head>
 <body>
 <header>
@@ -33,7 +34,7 @@
                         User Name
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="myprofile.html">Profile</a>
+                        <a class="dropdown-item" href="../users/myprofile.html">Profile</a>
                         <a class="dropdown-item" href="#">Logout</a>
                         <a class="dropdown-item" href="#">Settings</a>
                     </div>
@@ -42,37 +43,42 @@
         </div>
     </nav>
 </header>
-<main class="container">
-	<div class="row">
-        <button id="editButton">Edit Profile</button>
-		<section>
-			<h2>Khoi Ngo<h2>
-				<h3>Email</h3>
-					<p>test123@gmail.com</p>
-				<h3>User since:</h3>
-					<p>Feb 9, 2020</p>
-				<h3>Birthday:</h3>
-					<p>Jan 1, 1997</p>
-		</section>
-		<section id="user-posts">
-			
-		</section>
-	</div>
-</main>
+<form name="edituserform"  method="post" action="http://randyconnolly.com/tests/process.php" onsubmit="return validateUserUpdate()">
+	<fieldset>
+	<legend>Edit User</legend>
+		<p>
+			<label>First Name</label>
+			<input type="text" name="fname" id="fname" value="Khoi"/>
+		</p>
+		<p>
+			<label>Last Name</label>
+			<input type="text" name="lname" id="lname" value="Ngo"/>
+		</p>
+		<p>
+			<label>Birthday</label>
+			<input type="datetime" name="birth" id="birth" value="1997-01-01"/>
+		</p>
+		<p>
+			<label>Email</label>
+			<input type="text" name="email" id="email" value="test123@gmail.com"/>
+        </p>
+        <p>
+            Password must include: 1 lowercase, 1 uppercase, 1 number, and at least 8 characters
+        </p>
+		<p>
+			<label> Old Password</label>
+			<input type="password" name="oldpass" id="oldpass" value="1234Abcd"/>
+        </p>
+        <p>
+			<label>New Password</label>
+			<input type="password" name="newpass" id="newpass"/>
+		</p>
+		<p>
+			<label>Re-enter New Password</label>
+			<input type="password" name="rpass" id="rpass"/>
+		</p>
+		<button type="submit">Save</button>
+	</fieldset>
+</form>
 </body>
-<script>
-    document.getElementById("editButton").onclick = function () {
-        location.href = "edit.html";
-    };
-
-    var main = "<h2>User's Posts<h2>";
-    for (var i=0; i<20; i++)
-    {
-        main += "<article class='entry'><a href='show.html'>";
-        main += "<p class='main-title'><strong>Title " + i + "</strong></p>"
-        main += "<p class='main-body'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin justo. Morbi semper ipsum semper nunc rutrum sodales. </p>"
-        main += "</a></article>";
-    }
-    document.getElementById("user-posts").innerHTML = main;
-</script>
 </html>
