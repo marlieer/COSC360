@@ -1,7 +1,7 @@
 function validateNewUser(){
 	var fname = document.forms["signupform"]["fname"].value;
 	var lname = document.forms["signupform"]["lname"].value;
-	var birth = document.forms["signupform"]["brith"].value;
+	var birth = document.forms["signupform"]["birth"].value;
 	var email = document.forms["signupform"]["email"].value;
 	var pass = document.forms["signupform"]["pass"].value;
 	var rpass = document.forms["signupform"]["rpass"].value;
