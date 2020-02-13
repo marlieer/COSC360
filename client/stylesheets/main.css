@@ -34,37 +34,28 @@ legend {
 section {
     display: block;
 }
+.my-btn, .my-btn:hover {
+text-align: center;
+display: block;
+width: 10%;
+min-width: 10em;
+height: 2em;
+vertical-align: center;
+margin: 0.5em 40% 0 40%;
+}
 .create-post-btn {
-    text-align: center;
     background-color: #56CCF2;
     display: block;
-    width: 10%;
-    min-width: 10em;
-    height: 2em;
-    vertical-align: center;
-    margin: 0.5em 40% 0 40%;
 }
 .cancel-btn {
-    text-align: center;
     background-color: #4F4F4F;
     color: #F2F2F2;
-    display: block;
-    width: 10%;
-    min-width: 10em;
-    height: 2em;
-    vertical-align: center;
-    margin: 0.5em 40% 0 40%;
 }
-.cancel-btn:hover {
-    text-align: center;
-    background-color: #4F4F4F;
+.delete-btn {
+    background-color: darkred;
     color: #F2F2F2;
-    display: block;
-    width: 10%;
-    min-width: 10em;
-    height: 2em;
-    vertical-align: center;
-    margin: 0.5em 40% 0 40%;
+    margin-top: 3em;
+    width: 15%;
 }
 .input {
     background-color: #E0E0E0;
