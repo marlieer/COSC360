@@ -17,13 +17,58 @@ a {
     text-decoration: none;
     padding: 0;
 }
+form p{
+    width: 70%;
+    margin-left: 15%;
+}
 label {
-    display: block;
+    display: inline;
     padding-left: 0.25em;
     margin: 0;
 }
+legend {
+    text-align: center;
+    background-color: #56CCF2;
+    color: #333333;
+}
 section {
     display: block;
+}
+.create-post-btn {
+    text-align: center;
+    background-color: #56CCF2;
+    display: block;
+    width: 10%;
+    min-width: 10em;
+    height: 2em;
+    vertical-align: center;
+    margin: 0.5em 40% 0 40%;
+}
+.cancel-btn {
+    text-align: center;
+    background-color: #4F4F4F;
+    color: #F2F2F2;
+    display: block;
+    width: 10%;
+    min-width: 10em;
+    height: 2em;
+    vertical-align: center;
+    margin: 0.5em 40% 0 40%;
+}
+.cancel-btn:hover {
+    text-align: center;
+    background-color: #4F4F4F;
+    color: #F2F2F2;
+    display: block;
+    width: 10%;
+    min-width: 10em;
+    height: 2em;
+    vertical-align: center;
+    margin: 0.5em 40% 0 40%;
+}
+.input {
+    background-color: #E0E0E0;
+    resize: none;
 }
 .post {
     background-color: rgba(86, 204, 242, 0.3);
