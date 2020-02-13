@@ -2,65 +2,80 @@ html {
     font-family: Nunito, sans-serif;
     background-color: white;
 }
+
 h1 {
     font-size: 1.8em;
 }
+
 h2 {
-    font-size: 1.2em;
+    font-size: 1.5em;
+    text-align: center;
 }
+
 p, body {
     font-size: 0.9em;
     padding: 0;
     margin: 0;
 }
+
 a {
     text-decoration: none;
     padding: 0;
 }
-form p{
+
+form p {
     width: 70%;
     margin-left: 15%;
 }
+
 label {
     display: inline;
     padding-left: 0.25em;
     margin: 0;
 }
+
 legend {
     text-align: center;
     background-color: #56CCF2;
     color: #333333;
 }
+
 section {
     display: block;
 }
+
 .my-btn, .my-btn:hover {
-text-align: center;
-display: block;
-width: 10%;
-min-width: 10em;
-height: 2em;
-vertical-align: center;
-margin: 0.5em 40% 0 40%;
+    text-align: center;
+    display: block;
+    width: 10%;
+    min-width: 10em;
+    height: 2em;
+    vertical-align: center;
+    margin: 0.5em 40% 0 40%;
 }
+
 .create-post-btn {
     background-color: #56CCF2;
     display: block;
 }
+
 .cancel-btn {
     background-color: #4F4F4F;
     color: #F2F2F2;
 }
+
 .delete-btn {
     background-color: darkred;
     color: #F2F2F2;
     margin-top: 3em;
     width: 15%;
 }
+
 .input {
     background-color: #E0E0E0;
     resize: none;
 }
+
 .post {
     background-color: rgba(86, 204, 242, 0.3);
     border-radius: 5px;
@@ -93,32 +108,40 @@ margin: 0.5em 40% 0 40%;
     padding: 0.25em;
     height: 5em;
 }
+
 .post-title {
     color: #4F4F4F;
 }
-.comments{
+
+.comments {
     margin: 2em;
     padding: 1em;
     width: 90%;
 }
-.comment{
+
+.comment, .entry {
     background-color: #F2F2F2;
     border-radius: 5px;
     padding: 0.5em;
     margin: 1em;
+    border: 1px solid #E0E0E0;
 }
+
 .comment-author {
     color: #2F80ED;
     display: inline;
 }
-.comment-body {
-color: #4F4F4F;
+
+.comment-body, .main-body {
+    color: #4F4F4F;
 }
+
 .comment-date {
     color: #828282;
     float: right;
     display: inline;
 }
+
 .comment-post {
     background-color: #C4C4C4;
     display: block;
@@ -129,14 +152,38 @@ color: #4F4F4F;
     height: 2.4em;
     width: 5em;
 }
+
 .comment-text {
     width: 98.5%;
     margin: 0 0.25em 0 0.25em;
     resize: none;
 }
+
 .make-comment {
     background-color: rgba(111, 207, 151, 0.5);
     color: #4F4F4F;
     border-radius: 5px;
     width: 90%;
+}
+
+.main-title {
+    font-family: Nunito, sans-serif;
+    font-size: 1.2em;
+    font-weight: lighter;
+}
+
+aside article {
+background: rgba(242, 242, 242, 0.54);
+border: 1px solid #E0E0E0;
+box-sizing: border-box;
+    margin: 0.25em;
+}
+
+aside section {
+    background: rgba(86, 204, 242, 0.44);
+    border: 1px solid #56CCF2;
+    box-sizing: border-box;
+    border-radius: 3px;
+    margin-top: 1em;
+    padding-top: 0.5em;
 }
