@@ -25,7 +25,8 @@ a {
 
 form p {
     width: 70%;
-    margin-left: 15%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 label {
@@ -47,28 +48,31 @@ section {
 .my-btn, .my-btn:hover {
     text-align: center;
     display: block;
-    width: 10%;
-    min-width: 10em;
     height: 2em;
     vertical-align: center;
-    margin: 0.5em 40% 0 40%;
-}
-
-.create-post-btn {
+    margin: 0.5em auto 0 auto;
     background-color: #56CCF2;
     display: block;
 }
 
-.cancel-btn {
-    background-color: #4F4F4F;
-    color: #F2F2F2;
+.edit, .edit:hover {
+    width: max-content;
+    float: right;
+    margin:0;
+    display: inline;
 }
 
-.delete-btn {
+.cancel-btn, .cancel-btn:hover {
+    background-color: #4F4F4F;
+    color: #F2F2F2;
+    width: max-content;
+}
+
+.delete-btn, .delete-btn:hover {
     background-color: darkred;
     color: #F2F2F2;
     margin-top: 3em;
-    width: 15%;
+    width: max-content;
 }
 
 .input {
