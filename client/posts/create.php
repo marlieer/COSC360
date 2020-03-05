@@ -1,7 +1,7 @@
 <?php include '../top.php'; ?>
 <main>
     <div class="container">
-        <form method="post" action="http://randyconnolly.com/tests/process.php" name="create-post" onsubmit="return validateCreatePost()">
+        <form method="post" action="../server/posts/create.php" name="create-post" onsubmit="return validateCreatePost()">
             <fieldset>
                 <legend>Create Post</legend>
                 <p>
