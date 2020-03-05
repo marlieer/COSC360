@@ -19,7 +19,7 @@
             </p>
             <div class="container">
                 <button class="btn my-btn" type="submit">publish</button>
-                <a href="index.php" class="btn my-btn cancel-btn">cancel</a>
+                <a href="posts/index.php" class="btn my-btn cancel-btn">cancel</a>
                 <a href="#" class="btn my-btn delete-btn" onclick="alert('Are you sure?')">delete</a>
             </div>
         </fieldset>

@@ -28,7 +28,7 @@
     </div>
     <div class="stat-graph">
         <h3>Number of New Users per Month</h3>
-        <img src="../examples/newusers.jpg"/>
+        <img src="examples/newusers.jpg"/>
     </div>
 </main>
-<?php include '../top.php' ?>
+<?php include '../bottom.php' ?>

@@ -19,7 +19,7 @@
     var main = "<h2>User's Posts<h2>";
     for (var i=0; i<20; i++)
     {
-        main += "<article class='entry'><a href='../posts/show.php'>";
+        main += "<article class='entry'><a href='posts/show.php'>";
         main += "<p class='main-title'><strong>Title " + i + "</strong></p>"
         main += "<p class='main-body'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin justo. Morbi semper ipsum semper nunc rutrum sodales. </p>"
         main += "</a></article>";

@@ -23,23 +23,6 @@ form{
     padding: 2em 2em 2em 2em;
 }
 
-html {
-    font-family: Nunito, sans-serif;
-    background-color: white;
-}
-
-/*form legend {*/
-/*    font-size: 1.8em;*/
-/*    color: #2F80ED;*/
-/*}*/
-
-form p {
-    color: #4F4F4F;
-    font-size: 0.9em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
 .content{
     margin-top: 1em;
     margin-right: auto;
@@ -53,47 +36,14 @@ h2{
     color: #2F80ED;
 }
 
-article a{
-    margin-top: 1em;
-    padding: 1em 1em 1em 1em;
-    color: #4F4F4F;
-}
 
-h3, p{
-    margin-top: 1em;
-}
 #username{
     color: #2F80ED;
-}
-
-h3{
-    font-size: large;
 }
 
 #user-posts{
     margin-top: 3em;
 }
 
-.stat{
-    float: left;
-    width: 25%;
-    padding: 1em 1em 1em 1em;
-}
 
-.stat-graph{
-    margin-top: 1em;
-}
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.container{
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-    margin-top: 1em;
-}
 
