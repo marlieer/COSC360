@@ -1,6 +1,6 @@
 <?php include '../top.php'; ?>
 <main>
-    <form method="post" action="http://randyconnolly.com/tests/process.php" name="create-post" onsubmit="return validateCreatePost()">
+    <form method="post" action="../server/posts.php?id=1" name="create-post" onsubmit="return validateCreatePost()">
         <fieldset>
             <legend>Edit Post</legend>
             <p>
