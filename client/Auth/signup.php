@@ -1,5 +1,5 @@
 <?php include '../top.php'; ?>
-<form name="signupform"  method="post" action="http://randyconnolly.com/tests/process.php" onsubmit="return validateNewUser()">
+<form name="signupform"  method="post" action="../server/auth.php" onsubmit="return validateNewUser()">
 	<fieldset>
 	<legend>New User</legend>
 		<p>
@@ -31,7 +31,7 @@
 			<input class="form-control" type="password" name="rpass" id="rpass" />
         </p>
         <br/>
-		<button class="btn my-btn" type="submit">Signup</button>
+		<button type="submit" class="btn my-btn" name="signup-submit">Signup</button>
 		<a href="login.php">Have an account?</a>
 	</fieldset>
 </form>
