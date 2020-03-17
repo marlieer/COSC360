@@ -18,7 +18,7 @@
                     <small>Max characters: 250</small>
                 </p>
                 <div class="container">
-                    <button class="btn my-btn create-post-btn" type="submit">publish</button>
+                    <button name="create" class="btn my-btn create-post-btn" type="submit">publish</button>
                     <a href="posts/index.php" class="btn my-btn cancel-btn">cancel</a>
                 </div>
             </fieldset>
