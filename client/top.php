@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/reset.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css"/>
-<!--    <link rel="stylesheet" type="text/css" href="stylesheets/main2.css"/>-->
+
     <script type="text/javascript" src="js/form_validation.js"></script>
     <script type="text/javascript" src="js/signin_validation.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -29,8 +29,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="posts/create.php">Create Post</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin/stats.php">Admin Stats</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Administration
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="admin/stats.php">Analytics</a>
+                        <a class="dropdown-item" href="admin/index.php">Users</a>
+                    </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -86,15 +86,15 @@ function validateUserUpdate(){
 	var newpass = document.forms["edituserform"]["newpass"].value;
 	var rpass = document.forms["edituserform"]["rpass"].value;
 	
-	//alphabet only1
+	//alphabet only
 	var nameformat = /^[a-zA-Z0-9]*$/;
 	//email format
 	var emailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 	//1 lowercase, 1 uppercase, 1 number, at least 8 characters
 	var passformat = /(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/;
 	
-	if(fname == "" || lname == "" || birth == "" || email == "" || pass == "" || rpass == ""){
-		alert("Sign up form must be filled in");
+	if(fname == "" || lname == "" || birth == "" || email == "" || oldpass == ""){
+		alert("User info must be filled in");
 		return false;
 	}
 	else if(!fname.match(nameformat) || !lname.match(nameformat)){
