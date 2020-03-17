@@ -3,12 +3,21 @@
 	<div class="content">
 		<section>
 			<h1 id="username">Khoi Ngo</h1>
-				<h3>Email</h3>
-					<p>test123@gmail.com</p>
-				<h3>User since:</h3>
-					<p>Feb 9, 2020</p>
-				<h3>Birthday:</h3>
-					<p>Jan 1, 1997</p>
+			<img src="./profilePics/user1.png" alt="user1" class="profilepic"/>
+			<table class="table">
+                <tr>
+                    <th>Email:</th>
+                    <td>test123@gmail.com</td>
+                </tr>
+                <tr>
+                    <th>User since:</th>
+                    <td>Feb 9, 2020</td>
+                </tr>
+                <tr>
+                    <th>Birthday:</th>
+                    <td>Jan 1, 1997</td>
+                </tr>
+            </table>
 		</section>
 		<section id="user-posts">
 			

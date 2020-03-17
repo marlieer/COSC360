@@ -1,7 +1,11 @@
 <?php include '../top.php'; ?>
-<form name="edituserform"  method="post" action="http://randyconnolly.com/tests/process.php" onsubmit="return validateUserUpdate()">
+<form name="edituserform"  method="post" action="../server/users.php" onsubmit="return validateUserUpdate()">
 	<fieldset>
 	<legend>Edit User</legend>
+		<p>
+			<label>Profile Picture</label><br>
+			<input type="file" name="file" id="file" value="./profilePics/user1.png"/>
+		</p>
 		<p>
 			<label>First Name</label>
 			<input class="input form-control" type="text" name="fname" id="fname" value="Khoi"/>
@@ -37,7 +41,7 @@
 			<input class="input form-control" type="password" name="rpass" id="rpass"/>
         </p>
         <br/>
-		<button class="btn my-btn" type="submit">Save</button>
+		<button class="btn my-btn" type="submit" name="edit-submit">Save</button>
 	</fieldset>
 </form>
 <?php include '../bottom.php'; ?>

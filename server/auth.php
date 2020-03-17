@@ -107,11 +107,8 @@ function str_input($data) {
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
-  }
+}
 
-echo "<br>";
-echo "<p>Email: $email</p>";
-echo"<br>";
 echo "<p>Name: $fname $lname</p>";
 echo"<br>";
 echo "<p>Password: $pass</p>";

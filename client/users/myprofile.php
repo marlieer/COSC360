@@ -1,19 +1,20 @@
 <?php include '../top.php'; ?>
     <main class="container">
-        <a href="users/edit.php">Edit Profile</a>
         <section>
-            <p>Khoi Ngo</p>
+            <h2>Khoi Ngo</h2>
+            <a href="users/edit.php" class="center">Edit Profile</a>
+            <img src="./profilePics/user1.png" alt="user1" class="profile-pic"/>
             <table class="table">
                 <tr>
-                    <td>Email:</td>
+                    <th>Email:</th>
                     <td>test123@gmail.com</td>
                 </tr>
                 <tr>
-                    <td>User since:</td>
+                    <th>User since:</th>
                     <td>Feb 9, 2020</td>
                 </tr>
                 <tr>
-                    <td>Birthday:</td>
+                    <th>Birthday:</th>
                     <td>Jan 1, 1997</td>
                 </tr>
             </table>
