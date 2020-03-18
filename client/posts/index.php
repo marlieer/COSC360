@@ -1,4 +1,10 @@
-<?php include '../top.php'; ?>
+<?php
+include '../top.php';
+// TODO: Get all posts from the database. Order by date. Limit 15
+// TODO: Get recently viewed posts from database based on SESSION array of recently viewed
+if (isset($_SESSION['recentlyViewed']))
+// TODO: Get top 5 viewed posts from database
+?>
 <main class="container">
     <div class="row">
         <section class="col-8">
@@ -20,6 +26,7 @@
     var main = '';
     for (var i=0; i<20; i++)
     {
+        // TODO: add post ID to href for show
         main += "<article class='entry'><a href='posts/show.php'>";
         main += "<p class='main-title'><strong>Title " + i + "</strong></p>";
         main += "<p class='post-category'>#category</p>";
