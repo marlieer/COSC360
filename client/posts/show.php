@@ -10,7 +10,7 @@ if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
     echo "<p>UserID must be an integer. </p>";
 }
 
-// TODO: check if logged in user is an admin
+// check if logged in user is an admin
 $pdo = openConnection();
 
 $sql = "SELECT * from users where id=?";
@@ -38,14 +38,16 @@ if ($valid) {
     // Remove first post if array size is 5 or more
     // only add if postID is not already in array
     $recentlyViewed = (isset($_SESSION['recentlyViewed'])) ? $_SESSION['recentlyViewed'] : array();
-    if (sizeof($recentlyViewed) >= 5) {
-        array_shift($recentlyViewed);
-    }
+
     if (!in_array($postID, $recentlyViewed)) {
+        if (sizeof($recentlyViewed) >= 5) {
+            array_shift($recentlyViewed);
+        }
         array_push($recentlyViewed, $postID);
+        $_SESSION['recentlyViewed'] = $recentlyViewed;
     }
 
-    // TODO: Get post from database along with associated comments
+    // Get post from database along with associated comments
     $sql = "SELECT * FROM posts where id=?";
     $statement = $pdo->prepare($sql);
     $statement->bindValue(1, $postID);

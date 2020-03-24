@@ -1,6 +1,9 @@
 <?php
-
+include "../db_connection.php";
 if (isset($_GET['userID']) && isset($_GET['postID'])) {
+
+    $isValid = true;
+
     $userID = $_GET['userID'];
     $postID = $_GET['postID'];
 
@@ -12,9 +15,40 @@ if (isset($_GET['userID']) && isset($_GET['postID'])) {
         echo "<p>PostID must be an integer. </p>";
     }
 
-    // TODO: validate that userID and postID exist in database
+    // validate that userID and postID exist in database
+    $pdo = openConnection();
 
-    // TODO: add like to database
+    $sql = "SELECT * FROM users where id=?";
+    $statement = $pdo->prepare($sql);
+    $statement->bindValue(1, $userID);
+    $statement->execute();
+    $result = $statement->fetch();
 
-    echo "liked";
+    if (!$result){
+        $isValid = false;
+        echo ("Not a valid user_id");
+    }
+
+
+    $sql = "SELECT * FROM posts where id=?";
+    $statement = $pdo->prepare($sql);
+    $statement->bindValue(1, $postID);
+    $statement->execute();
+    $result = $statement->fetch();
+
+    if (!$result){
+        $isValid = false;
+        echo "Not a valid post_id";
+    }
+
+    // add like to database
+    if ($isValid){
+        $sql = "INSERT INTO likes (post_id, user_id) VALUES (?, ?)";
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(1, $postID);
+        $statement->bindValue(2, $userID);
+        $result = $statement->execute();
+    }
+
+    closeConnection($pdo);
 }
