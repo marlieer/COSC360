@@ -2,22 +2,38 @@
 include '../top.php';
 
 $valid = true;
+$admin = false;
 
 // validate that logged in userID is an integer
-$session_userID=(isset($_SESSION['userID'])) ? $_SESSION['userID'] : null;
+$session_userID=(isset($_SESSION['userID'])) ? $_SESSION['userID'] : 1;
 if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
     echo "<p>UserID must be an integer. </p>";
 }
 
+// TODO: check if logged in user is an admin
+$pdo = openConnection();
+
+$sql = "SELECT * from users where id=?";
+$statement = $pdo->prepare($sql);
+$statement->bindValue(1, $session_userID);
+$statement->execute();
+$result = $statement->fetch();
+
+if ($result) {
+    $admin = $result['admin'];
+}
+
+
 // validate that postID is an integer
-$postID = (isset($_GET['postID'])) ? $_GET['postID'] : null;
+parse_str($_SERVER['QUERY_STRING'], $params);
+$postID = $params['id'];
 if (!filter_var($postID, FILTER_VALIDATE_INT)) {
     echo "<p>PostID must be an integer. </p>";
     $valid = false;
 }
 
 if ($valid) {
-    
+
     // Add this post to session array of recently viewed posts.
     // Remove first post if array size is 5 or more
     // only add if postID is not already in array
@@ -29,20 +45,53 @@ if ($valid) {
         array_push($recentlyViewed, $postID);
     }
 
-    // TODO: Get post by ID from database along with associated comments
+    // TODO: Get post from database along with associated comments
+    $sql = "SELECT * FROM posts where id=?";
+    $statement = $pdo->prepare($sql);
+    $statement->bindValue(1, $postID);
+    $statement->execute();
+    $result = $statement->fetch();
 
     // assign post attributes
     $edit_href = "posts/edit.php?id=$postID";
-    $post_userID = 1;
-    $title = "Ipsem Title";
-    $category = "#Rubish";
-    $date = "February 14, 2020";
-    $author = "Dr. Shehata";
-    $author_href = "users/show.php?id=$post_userID";
-    $body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tincidunt,
-                    mi in malesuada venenatis, mi tortor aliquam justo, et consectetur libero
-                    felis eget elit. Sed id elit a est congue mattis";
+    $post_userID = null;
+    $title = null;
+    $category = null;
+    $body = null;
+    $date = null;
+    $author = null;
+    $author_href = null;
+
+
+    if($result) {
+
+        // get name of post author
+        $sql = "SELECT * FROM users where id=?";
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(1, $result['user_id']);
+        $statement->execute();
+        $user = $statement->fetch();
+        if ($user) {
+            $author = $user['name'];
+        }
+        else $author = "Author Not Found";
+
+        $post_userID = $result['user_id'];
+        $title = $result['title'];
+        $category = $result['category'];
+        $date = date("F j, Y", strtotime($result['created_at']));
+        $author_href = "users/show.php?id=" . $result['user_id'];
+        $body =  $result['body'];
+    }
+
+    $sql = "SELECT * FROM comments where post_id=?";
+    $statement = $pdo->prepare($sql);
+    $statement->bindValue(1, $postID);
+    $statement->execute();
+    $comments = $statement->fetchAll();
 }
+
+closeConnection($pdo);
 ?>
 <main>
     <section class="post">
@@ -71,20 +120,24 @@ if ($valid) {
             </form>
         </div>
         <div id="comments">
-
+            <?php if($comments) {
+                foreach($comments as $comment) {
+                    $sql = "SELECT name FROM users where id=?";
+                    $statement = $pdo->prepare($sql);
+                    $statement->bindValue(1, $comment['user_id']);
+                    $statement->execute();
+                    $user = $statement->fetch();
+                    ?>
+            <article class='comment'>
+                <p class='comment-author'><a href="users/show.php?id=<?php echo $comment['user_id'];?>"><?php if ($user) {echo $user[0];}?></a></p>
+                <p class='comment-date'><time><?php echo date("F j, Y", strtotime($comment['created_at']));?></time></p>
+                <p class='comment-body'><?php echo $comment['comment'];?></p>
+            </article>
+                <?php } } ?>
         </div>
     </section>
 </main>
 <script>
-    var comment = '';
-    for (var j = 0; j < 4; j++) {
-        comment += "<article class='comment'>";
-        comment += "<p class='comment-author'><a href='users/show.php'>Dr. Abdallah</a></p>";
-        comment += "<p class='comment-date'><time>February 15, 2020</time></p>";
-        comment += "<p class='comment-body'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut sollicitudin justo. Morbi semper ipsum semper nunc rutrum sodales. </p>";
-        comment += "</article>";
-    }
-    document.getElementById("comments").innerHTML = comment;
 
     var userID = '<?php echo $session_userID;?>';
     var post_userID = '<?php echo $post_userID?>';

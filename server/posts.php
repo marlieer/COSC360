@@ -1,5 +1,5 @@
 <?php
-
+$connection = openConnection();
 // create or edit a post
 if (isset($_POST['create']) || isset($_POST['edit'])) {
     $isValidForm = true;
