@@ -1,5 +1,6 @@
 
-<?php session_start(); ?>
+<?php session_start();
+include '../../db_connection.php'?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
