@@ -34,7 +34,7 @@
                     </p>
                     <br/>
                     <button type="submit" class="btn my-btn" name="signup-submit">Signup</button>
-                    <a href="login.php">Have an account?</a>
+                    <a href="auth/login.php">Have an account?</a>
                 </fieldset>
             </form>
         </div>

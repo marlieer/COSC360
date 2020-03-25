@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,28 +27,44 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="posts/index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="posts/create.php">Create Post</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Administration
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="admin/stats.php">Analytics</a>
-                        <a class="dropdown-item" href="admin/index.php">Users</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        User Name
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="users/myprofile.php">Profile</a>
-                        <a class="dropdown-item" href="#">Logout</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                    </div>
-                </li>
+                <?php
+                    if(isset($_SESSION['id'])){
+                        echo '<li class="nav-item">';
+                        echo '<a class="nav-link" href="posts/create.php">Create Post</a>';
+                        echo '</li>';
+                    } 
+                    
+                    if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1){
+                        echo '<li class="nav-item dropdown">';
+                        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                        echo 'Administration';
+                        echo '</a>';
+                        echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+                        echo '<a class="dropdown-item" href="admin/stats.php">Analytics</a>';
+                        echo '<a class="dropdown-item" href="admin/index.php">Users</a>';
+                        echo '</div>';
+                        echo '</li>';
+                    }
+               
+               
+                    if(isset($_SESSION['id'])){
+                        echo '<li class="nav-item dropdown">';
+                        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                        echo  $_SESSION['user'];
+                        echo '</a>';
+                        echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+                        echo '<a class="dropdown-item" href="users/myprofile.php">Profile</a>';
+                        echo '<a class="dropdown-item" href="../server/logout.php">Logout</a>';
+                        echo '<a class="dropdown-item" href="#">Settings</a>';
+                        echo '</div>';
+                        echo '</li>';
+                    }
+                    else{
+                        echo '<li class="nav-item">';
+                        echo '<a class="nav-link" href="auth/login.php">Login</a>';
+                        echo '</li>';
+                    }
+                ?>
             </ul>
         </div>
     </nav>

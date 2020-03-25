@@ -12,7 +12,7 @@
                         <label>Password</label>
                         <input class="input form-control" type="password" name="pass" id="pass"/>
                     </p>
-                    <br/>
+                    <br/>                   
                     <button type="submit" class="btn my-btn" name="login-submit">Login</button>
                     <a href="auth/signup.php">Sign Up</a>
                     <a href="auth/forgotpassword.php">Forgot Password?</a>

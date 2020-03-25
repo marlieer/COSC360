@@ -1,73 +1,105 @@
 <?php
+// for database connection later
+include "db_connect.php";
+
+// innitalize all variables for data
 $fnameErr =  $lnameErr = $emailErr = $opassErr = $npassErr  = $rpassErr = $birthErr = "";
 $fname = $lname = $email = $opass = $npass = $rpass = $birth = "";
 
-$userid = 2;
+// get session id
+session_start();
+$id = isset($_SESSION["id"]) ? $_SESSION["id"] : 0;
 
-$passPreg = "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/";
-$namePreg = "/^[a-zA-Z0-9]*$/";
+// -------------------------------------------------------------------------------
+// FUNCTIONS
+// -------------------------------------------------------------------------------
 
-
-echo "<h2>Your Input:</h2>";
-
+// -------------------------------------------------------------------------------
+// for EDITING USER page
+// -------------------------------------------------------------------------------
 if (isset($_POST['edit-submit'])) {
+
+    // if email changed
     if (!empty($_POST["email"]))  {
         $email = str_input($_POST["email"]);
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $emailErr = "Invalid email format";
         }
+        else{
+            db_email($email, $id);
+        }
     }
 
+    //if new password
     if (!empty($_POST["newpass"])) {
         if (empty($_POST["oldpass"])) {
             $opassErr = "Password is required";
         } 
-        else {
+        else{
             $opass = str_input($_POST["oldpass"]);
-            if (!preg_match($passPreg, $opass)) {
+
+            if(check_pass_format($opass)) {
                 $opassErr = "Invalid password format";
-                echo 'here';
             }
-            else{
-                
+            // check if inputed old password matches DB password
+            elseif(check_pass($opass, $id)){
                 $npass = str_input($_POST["newpass"]);
-                if (!preg_match($passPreg, $npass)) {
+
+                if (check_pass_format($npass)) {
                     $npassErr = "Invalid password format";
                 }
+
                 if (empty($_POST["rpass"])) {
                     $rpassErr = "Password is required";
                 } 
                 else {
                     $rpass = str_input($_POST["rpass"]);
-                    if (!preg_match($passPreg, $rpass)) {
+                    if (check_pass_format($rpass)) {
                         $rpassErr = "Invalid password format";
                     }
-                    if(strcmp($rpass,$npass) !== 0){
+                    // check if new password and reenter password match
+                    elseif(strcmp($rpass,$npass) !== 0){
                         $rpassErr = "Confirmed password does not match password";
                     }
+                    else{
+                        echo"here";
+                        db_password($npass, $id);
+                    }
                 }
+            }
+            else{
+                $opassErr = "Incorrect password";
             }
         }
     }
 
+    // if name change
     if (!empty($_POST["fname"])){
         $fname = str_input($_POST["fname"]);
-        if (!preg_match($namePreg, $fname)) {
+        if (preg_match("@[0-9]@", $fname)) {
             $fnameErr = "Invalid name format";
         }
-    }
-
-    if (!empty($_POST["lname"])){
-        $lname = str_input($_POST["lname"]);
-        if (!preg_match($namePreg, $lname)) {
-            $lnameErr = "Invalid name format";
+        else{
+            if (!empty($_POST["lname"])){
+                $lname = str_input($_POST["lname"]);
+                if (preg_match("@[0-9]@", $lname)) {
+                    $lnameErr = "Invalid name format";
+                }
+                else{
+                    $name = $fname." ".$lname;
+                    db_name($name, $id);
+                }
+            }
         }
-    }
+    }      
 
+    // if birthdate change
     if (!empty($_POST["birth"])){
         $birth = str_input($_POST["birth"]);
+        db_birthdate($birth, $id);
     }
 
+    // TODO
     if(!empty($_FILE["file"])){
         $validExt = array("jpg", "png");
 
@@ -88,9 +120,15 @@ if (isset($_POST['edit-submit'])) {
                 echo "<p>".$fileName." invalid file type</p>";
         }
     }
+
+    // redirect to profile page after
+    echo "<script>window.location='../client/users/myprofile.php'</script>";
 }
 
 
+// -------------------------------------------------------------------------------
+// FUNCTIONS
+// -------------------------------------------------------------------------------
 function str_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -98,17 +136,116 @@ function str_input($data) {
     return $data;
 }
 
-echo "<p>Name: $fname $lname</p>";
-echo"<br>";
-echo "<p>Email: $email</p>";
-echo"<br>";
-echo "<p>old Password: $opass</p>";
-echo"<br>";
-echo "<p>New Password: $npass</p>";
-echo"<br>";
-echo "<p>Re-enter Password: $rpass</p>";
-echo"<br>";
-echo "<p>Birthday: $birth</p>";
-echo"<br>";
+function db_email($email, $id){
+    try{
+        $conn = openConnection();
+
+        $sql = "UPDATE users SET email=? WHERE id=?";
+        $statement = $conn->prepare($sql);
+
+        $statement->bindValue(1, $email);
+        $statement->bindValue(2, $id);
+
+        $statement->execute();
+
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }  
+}
+
+function db_name($name, $id){  
+    try{
+        $conn = openConnection();
+
+        $sql = "UPDATE users SET name=? WHERE id=?";
+        $statement = $conn->prepare($sql);
+
+        $statement->bindValue(1, $name);
+        $statement->bindValue(2, $id);
+
+        $statement->execute();
+
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }  
+}
+
+function db_birthdate($birth, $id){  
+    try{
+        $conn = openConnection();
+
+        $sql = "UPDATE users SET birthdate=? WHERE id=?";
+        $statement = $conn->prepare($sql);
+        
+        $statement->bindValue(1, $birth);
+        $statement->bindValue(2, $id);
+
+        $statement->execute();
+
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }  
+}
+
+function check_pass($pass, $id){  
+    $real = '';
+    try{
+        $conn = openConnection();
+
+        $sql = "SELECT password FROM users WHERE id=$id";
+        $result = $conn->query($sql);
+
+        while($row = $result->fetch()){
+            $real = $row["password"];
+        }
+
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    } 
+    
+    if(strcmp($real, $pass) != 0){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+function check_pass_format($pass){
+    $upper = preg_match('@[A-Z]@', $pass);
+    $lower = preg_match('@[a-z]@', $pass);
+    $number = preg_match('@[0-9]@', $pass);
+    if (!$upper || !$lower || !$number || strlen($pass) < 8 ){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function db_password($pass, $id){
+    try{
+        $conn = openConnection();
+        $sql = "UPDATE users SET password=? WHERE id=?";
+        $statement = $conn->prepare($sql);
+        
+        $statement->bindValue(1, $pass);
+        $statement->bindValue(2, $id);
+        $statement->execute();
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }  
+}
+
 
 ?>
