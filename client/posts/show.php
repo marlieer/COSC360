@@ -6,7 +6,17 @@ $admin = false;
 
 // validate that logged in userID is an integer
 $session_userID = (isset($_SESSION['id'])) ? $_SESSION['id'] : -1;
-if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
+
+// validate that postID is an integer
+parse_str($_SERVER['QUERY_STRING'], $params);
+$postID = $params['id'];
+
+
+if (!filter_var($postID, FILTER_VALIDATE_INT)) {
+    echo "<p>Not a valid postID. Please try again</p>";
+    $valid = false;
+}
+else if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
     echo "<p>You are not properly logged in. Please try again </p>";
 } else {
 
@@ -23,14 +33,6 @@ if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
         if ($result) {
             $admin = $result['admin'];
         }
-    }
-
-// validate that postID is an integer
-    parse_str($_SERVER['QUERY_STRING'], $params);
-    $postID = $params['id'];
-    if (!filter_var($postID, FILTER_VALIDATE_INT)) {
-        echo "<p>PostID must be an integer. </p>";
-        $valid = false;
     }
 
     if ($valid) {
@@ -58,7 +60,7 @@ if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
         // assign post attributes
         $edit_href = "posts/edit.php?id=$postID";
         $post_userID = null;
-        $title = null;
+        $title = "POST NOT FOUND";
         $category = null;
         $body = null;
         $date = null;
@@ -115,10 +117,11 @@ if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
     </section>
     <section class="comments">
         <div class="make-comment">
-            <form method="post" action="http://randyconnolly.com/tests/process.php">
+            <form method="post" action="../server/comments.php">
                 <label for="new_comment">Make a Comment</label>
                 <textarea id="new_comment" class="comment-text" name="comment"></textarea>
-                <button class="comment-post btn" type="submit">post</button>
+                <input type="hidden" name="postID" value="<?php echo $postID;?>"/>
+                <button class="comment-post btn" name="create" type="submit">post</button>
             </form>
         </div>
         <div id="comments">
@@ -150,15 +153,18 @@ if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
     var userID = '<?php echo $session_userID;?>';
     var post_userID = '<?php echo $post_userID?>';
     var postID = '<?php echo $postID ?>';
+    var title = '<?php echo $title ?>';
+
+    var editButton = $('#edit');
 
     // if user is not logged in, remove edit/like button
-    if (userID === "-1") {
-        $('#edit').remove();
+    if (userID === "-1" || title === "POST NOT FOUND") {
+        editButton.remove();
         $('.make-comment').remove();
     }
     // if the logged in user is not the author of the post, change the edit button to "like"
     else if (userID !== post_userID) {
-        $('#edit').removeAttr("href").html("Like").click(function () {
+        editButton.removeAttr("href").html("Like").click(function () {
 
             $.ajax({
                 type: "GET",
@@ -167,8 +173,8 @@ if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
                     postID: postID,
                 },
                 url: "../server/likes.php",
-                success: function (response) {
-                    alert(response);
+                success: function () {
+                    editButton.addClass('clicked-btn').html('Liked');
                 }
             });
         });
