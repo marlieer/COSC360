@@ -62,6 +62,16 @@ section {
     display: block;
 }
 
+td, th{
+    text-align: center;
+}
+
+.center{
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
 .comment-author {
     color: #2F80ED;
     display: inline;
@@ -191,6 +201,17 @@ section {
 
 .post-title {
     color: #4F4F4F;
+}
+
+.profile-pic{
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: block;
+    border: 2px solid black;
+    border-radius: 25px;
 }
 
 .row:after {

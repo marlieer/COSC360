@@ -1,6 +1,5 @@
-<?php
- include '../../db_connection.php';
-?>
+
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/reset.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css"/>
-<!--    <link rel="stylesheet" type="text/css" href="stylesheets/main2.css"/>-->
+
     <script type="text/javascript" src="js/form_validation.js"></script>
     <script type="text/javascript" src="js/signin_validation.js"></script>
     <script
@@ -32,22 +31,43 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="posts/index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="posts/create.php">Create Post</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin/stats.php">Admin Stats</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        User Name
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="users/myprofile.php">Profile</a>
-                        <a class="dropdown-item" href="#">Logout</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                    </div>
-                </li>
+                <?php
+                    if(isset($_SESSION['id'])){
+                        echo '<li class="nav-item">';
+                        echo '<a class="nav-link" href="posts/create.php">Create Post</a>';
+                        echo '</li>';
+                    } 
+                    
+                    if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1){
+                        echo '<li class="nav-item dropdown">';
+                        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                        echo 'Administration';
+                        echo '</a>';
+                        echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+                        echo '<a class="dropdown-item" href="admin/stats.php">Analytics</a>';
+                        echo '<a class="dropdown-item" href="admin/index.php">Users</a>';
+                        echo '</div>';
+                        echo '</li>';
+                    }
+             
+                    if(isset($_SESSION['id'])){
+                        echo '<li class="nav-item dropdown">';
+                        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                        echo  $_SESSION['user'];
+                        echo '</a>';
+                        echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+                        echo '<a class="dropdown-item" href="users/myprofile.php">Profile</a>';
+                        echo '<a class="dropdown-item" href="../server/logout.php">Logout</a>';
+                        echo '<a class="dropdown-item" href="#">Settings</a>';
+                        echo '</div>';
+                        echo '</li>';
+                    }
+                    else{
+                        echo '<li class="nav-item">';
+                        echo '<a class="nav-link" href="auth/login.php">Login</a>';
+                        echo '</li>';
+                    }
+                ?>
             </ul>
         </div>
     </nav>

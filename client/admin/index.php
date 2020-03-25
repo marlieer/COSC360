@@ -1,4 +1,5 @@
 <?php include '../top.php'; ?>
+<?php include 'admin_check.php'; ?>
 <main class="container">
 	<div class="content">
 		<section id="users">
