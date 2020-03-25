@@ -13,7 +13,7 @@
                     </p>
                     <br/>
                     <button type="submit" class="btn my-btn" name="forgot-submit">Submit</button>
-                    <a href="login.php">Go Back</a>
+                    <a href="auth/login.php">Go Back</a>
                 </fieldset>
             </form>
         </div>
