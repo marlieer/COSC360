@@ -1,6 +1,6 @@
 <?php include '../top.php'; ?>
 <main>
-    <form method="post" action="../server/posts.php?id=1" name="create-post" onsubmit="return validateCreatePost()">
+    <form method="post" action="../server/posts.php?id=1" name="edit-post" onsubmit="return validateCreatePost()">
         <fieldset>
             <legend>Edit Post</legend>
             <p>
@@ -18,7 +18,7 @@
                 <small>Max characters: 250</small>
             </p>
             <div class="container">
-                <button class="btn my-btn" type="submit">publish</button>
+                <button class="btn my-btn" name="edit" type="submit">publish</button>
                 <a href="posts/index.php" class="btn my-btn cancel-btn">cancel</a>
                 <a href="#" class="btn my-btn delete-btn" onclick="alert('Are you sure?')">delete</a>
             </div>
