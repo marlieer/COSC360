@@ -13,8 +13,7 @@ if (isset($_SESSION['recentlyViewed'])) {
 ?>
     <main class="container">
         <div class="row">
-            <section class="col-8">
-                <section id="main-feed">
+            <section class="col-8" id="main-feed">
                     <?php
                     if ($results) {
                         while ($post = $results->fetch()) { ?>
@@ -29,8 +28,6 @@ if (isset($_SESSION['recentlyViewed'])) {
                                 </a></article>
                         <?php }
                     } ?>
-
-                </section>
             </section>
             <aside class="col-4">
                 <section id="trending">

@@ -40,6 +40,8 @@ function createComment(){
 
         $statement->execute();
 
+        closeConnection($pdo);
+
         // redirect to post
         header("Location: ../client/posts/show.php?id=$postID");
         exit();

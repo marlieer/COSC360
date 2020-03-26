@@ -2,7 +2,7 @@
 include '../db_connection.php';
 include '../client/top.php';
 
-$connection = openConnection();
+$pdo = openConnection();
 $isValidForm = true;
 $errors = array();
 
@@ -17,7 +17,6 @@ else {
         echo "<p>You are not properly logged in. Please try again </p>";
     } else {
 
-        $pdo = openConnection();
         $sql = "SELECT * FROM users WHERE id=?;";
         $statement = $pdo->prepare($sql);
         $statement->bindValue(1, $userID);
@@ -86,7 +85,7 @@ else {
                         $result = $statement->execute();
 
 
-                        //TODO: redirect to show post
+                        // redirect to show post
                         header("Location: ../client/posts/show.php?id=$postID");
                         exit();
 
@@ -124,6 +123,7 @@ else {
     }
 }
 
+closeConnection($pdo);
 
 
 
