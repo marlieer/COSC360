@@ -42,6 +42,7 @@ $result = $statement->fetch();
                     <p>
                         <label for="category">Category:</label>
                         <input class="input form-control" type="text" name="category" id="category" max="50" value="<?php echo $result['category']; ?>"/>
+                        <small>Separate multiple categories with a semi-colon</small>
                     </p>
                     <p>
                         <label for="body">Body:</label>

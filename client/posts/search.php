@@ -1,7 +1,12 @@
 <?php
 include '../top.php';
 
-$query = "";
+$query="";
+parse_str($_SERVER['QUERY_STRING'], $params);
+if ($params['query'] != null){
+    $query = filter_var($params['query'], FILTER_SANITIZE_STRING);
+}
+
 if (isset($_GET['query'])) {
     $query = filter_var($_GET['query'], FILTER_SANITIZE_STRING);
 }
