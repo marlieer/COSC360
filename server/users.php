@@ -7,17 +7,67 @@ $fnameErr =  $lnameErr = $emailErr = $opassErr = $npassErr  = $rpassErr = $birth
 $fname = $lname = $email = $opass = $npass = $rpass = $birth = "";
 
 // get session id
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $id = isset($_SESSION["id"]) ? $_SESSION["id"] : 0;
 
 // -------------------------------------------------------------------------------
-// FUNCTIONS
+// for MYPROFILE and SHOWING USERS page
 // -------------------------------------------------------------------------------
+function show_users($user){
+    $data = [];
 
+    try{
+        $conn = openConnection();
+        $sql = "SELECT id, name, email, birthdate, profile_img, created_at FROM users WHERE id=$user";
+        $result = $conn->query($sql);
+
+        while($row = $result->fetch()){
+            $data[] = $row['id'];
+            $data[] = $row['name'];
+            $data[] = $row['birthdate'];
+            $data[] = $row['email'];
+            $data[] = $row['profile_img'];
+            $data[] = $row['created_at'];
+        }
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }  
+
+    return $data;
+}
+
+function show_posts($user){
+    $data = [];
+    try{
+        $conn = openConnection();
+        $sql = "SELECT id, title, body FROM posts WHERE id=$user";
+        $result = $conn->query($sql);
+        while($row = $result->fetch()){
+            $data[$row['id']] = array($row['title'], $row['body']);
+        }
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }
+    
+    echo "<h2>User's Posts</h2>";
+    foreach($data as $key=>$val){
+        echo "<article class='entry'><a href='posts/show.php?id=$key'>";
+        echo "<p class='main-title'><strong>$val[0]</strong></p>";
+        echo "<p class='main-body'>$val[1]</p>";
+        echo "</a></article>";
+    }
+}
 // -------------------------------------------------------------------------------
 // for EDITING USER page
 // -------------------------------------------------------------------------------
 if (isset($_POST['edit-submit'])) {
+    $edit = 0;
 
     // if email changed
     if (!empty($_POST["email"]))  {
@@ -27,6 +77,7 @@ if (isset($_POST['edit-submit'])) {
         }
         else{
             db_email($email, $id);
+            $edit++;
         }
     }
 
@@ -62,8 +113,8 @@ if (isset($_POST['edit-submit'])) {
                         $rpassErr = "Confirmed password does not match password";
                     }
                     else{
-                        echo"here";
                         db_password($npass, $id);
+                        $edit++;
                     }
                 }
             }
@@ -88,6 +139,7 @@ if (isset($_POST['edit-submit'])) {
                 else{
                     $name = $fname." ".$lname;
                     db_name($name, $id);
+                    $edit++;
                 }
             }
         }
@@ -97,23 +149,26 @@ if (isset($_POST['edit-submit'])) {
     if (!empty($_POST["birth"])){
         $birth = str_input($_POST["birth"]);
         db_birthdate($birth, $id);
+        $edit++;
     }
 
     // TODO
-    if(!empty($_FILE["file"])){
+    if(is_uploaded_file($_FILES["upload"]["tmp_name"])){
         $validExt = array("jpg", "png");
 
-        $fileName = $_FILES['file']['name'];
+        $fileName = $_FILES['upload']['name'];
         $fileExt = explode('.', $fileName);
         $fileActualExt = strtolower(end($fileExt));
 
         if(in_array($fileActualExt, $validExt)){
             echo "<p>valid file</p>";
-
             
-            $fileToMove = $_FILES["file"]["tmp_name"];
-            $destination = "./client/profilePics/".$userid.".".$fileActualExt;
+            $fileToMove = $_FILES["upload"]["tmp_name"];
+            $destination = "../client/profilePics/".$id.".".$fileActualExt;
             move_uploaded_file($fileToMove, $destination);
+
+            db_profilePic($id, $destination);
+            $edit++;
 
         }
         else{
@@ -121,6 +176,9 @@ if (isset($_POST['edit-submit'])) {
         }
     }
 
+    if($edit > 0){
+        db_update($id);
+    }
     // redirect to profile page after
     echo "<script>window.location='../client/users/myprofile.php'</script>";
 }
@@ -238,6 +296,39 @@ function db_password($pass, $id){
         $statement = $conn->prepare($sql);
         
         $statement->bindValue(1, $pass);
+        $statement->bindValue(2, $id);
+        $statement->execute();
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }  
+}
+
+function db_profilePic($id, $file){
+    try{
+        $conn = openConnection();
+        $sql = "UPDATE users SET profile_img=? WHERE id=?";
+        $statement = $conn->prepare($sql);
+        
+        $statement->bindValue(1, $file);
+        $statement->bindValue(2, $id);
+        $statement->execute();
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }  
+}
+
+function db_update($id){
+    $d = date('Y-m-d');
+    try{
+        $conn = openConnection();
+        $sql = "UPDATE users SET last_login=? WHERE id=?";
+        $statement = $conn->prepare($sql);
+        
+        $statement->bindValue(1, $d);
         $statement->bindValue(2, $id);
         $statement->execute();
         closeConnection($conn);

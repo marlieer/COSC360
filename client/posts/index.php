@@ -1,4 +1,5 @@
 <?php
+include '../../server/db_connect.php';
 include '../top.php';
 // TODO: Get all posts from the database. Order by date. Limit 15
 $pdo = openConnection();
