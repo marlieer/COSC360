@@ -67,7 +67,6 @@ else if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
         $author = null;
         $author_href = null;
 
-
         if ($result) {
 
             // get name of post author
@@ -86,6 +85,14 @@ else if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
             $date = date("F j, Y", strtotime($result['created_at']));
             $author_href = "users/show.php?id=" . $result['user_id'];
             $body = $result['body'];
+            $views = $result['views'];
+
+            // add another view to the post
+            $sql = "UPDATE posts SET views=? WHERE id=?;";
+            $statement = $pdo->prepare($sql);
+            $statement->bindValue(1, $views + 1);
+            $statement->bindValue(2, $postID);
+            $statement->execute();
         }
 
         $sql = "SELECT * FROM comments where post_id=?";
