@@ -1,5 +1,6 @@
 <?php
 include '../top.php';
+include '../../db_connection.php';
 
 $valid = true;
 $admin = false;
@@ -111,9 +112,12 @@ else if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
             <a id="edit" href="<?php echo $edit_href ?>" class="btn my-btn edit">Edit</a>
             <h1 class="post-title"><?php echo $title ?></h1>
             <p>
-                <?php foreach($categories as $category) { ?>
-                <a class="post-category" href="posts/search.php?query=<?php echo str_replace("#", "", $category);?>"><?php echo $category ?></a>
-                <?php } ?>
+                <?php if ($categories !== null) {
+                    foreach ($categories as $category) { ?>
+                        <a class="post-category"
+                           href="posts/search.php?query=<?php echo str_replace("#", "", $category); ?>"><?php echo $category ?></a>
+                    <?php }
+                }?>
             </p>
             <p class="post-date">
                 <time><?php echo $date ?></time>

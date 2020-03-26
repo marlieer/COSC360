@@ -161,6 +161,21 @@ td, th{
     font-weight: lighter;
 }
 
+.message {
+    background-color: lightgreen;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 1em;
+    border: 1px solid green;
+}
+.warning {
+    background-color: lightcoral;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 1em;
+    border: 1px solid darkred;
+}
+
 .my-btn, .my-btn:hover {
     text-align: center;
     display: block;

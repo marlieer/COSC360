@@ -1,22 +1,23 @@
 <?php
 
 include '../top.php';
+include '../../db_connection.php';
 
 $valid = true;
-$_SESSION['userID'] = 1;
+$_SESSION['userID'] = -1;
 
 // validate that postID is an integer
 parse_str($_SERVER['QUERY_STRING'], $params);
 $postID = $params['id'];
 if (!filter_var($postID, FILTER_VALIDATE_INT)) {
-    echo "<p>PostID must be an integer. </p>";
+    echo "<p class='warning'>PostID must be an integer. </p>";
     $valid = false;
 }
 
 // validate that logged in userID is an integer
 $session_userID=(isset($_SESSION['userID'])) ? $_SESSION['userID'] : 1;
 if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
-    echo "<p>UserID must be an integer. </p>";
+    echo "<p class='warning'>UserID must be an integer. </p>";
     $valid = false;
 }
 
@@ -51,8 +52,8 @@ $result = $statement->fetch();
                     </p>
                     <div class="container">
                         <button class="btn my-btn" name="edit" type="submit">publish</button>
-                        <a href="posts/index.php" class="btn my-btn cancel-btn">cancel</a>
-                        <button class="btn my-btn delete-btn" name="delete" type="submit" onclick="alert('Are you sure?')">delete</button>
+                        <a href="posts/show.php?id=<?php echo $postID;?>" class="btn my-btn cancel-btn">cancel</a>
+                        <button class="btn my-btn delete-btn" name="delete" type="submit" onclick="confirm('Are you sure?')">delete</button>
                     </div>
                 </fieldset>
             </form>
