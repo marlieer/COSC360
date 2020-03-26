@@ -8,7 +8,7 @@
 		<p>
 			<label>Profile Picture</label><br>
 			<input type="file" name="upload" id="upload">
-			Current Profile Picture:<?php if(!empty($data[4])) echo '<img src="'.$data[4].'" alt="'.$data[1].'" style="height: 100px; width: 150px;"/>'; ?>
+			Current Profile Picture:<?php if(!empty($data[4])) echo '<img src="'.$data[4].'" alt="'.$data[1].'" style="margin-left:10px;height: 20%; width: 20%;"/>'; ?>
 		</p>
 		<p>
 			<label>First Name</label>

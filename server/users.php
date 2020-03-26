@@ -20,7 +20,7 @@ function show_users($user){
 
     try{
         $conn = openConnection();
-        $sql = "SELECT id, name, email, birthdate, profile_img, created_at FROM users WHERE id=$user";
+        $sql = "SELECT id, name, email, birthdate, profile_img, created_at, enabled FROM users WHERE id=$user";
         $result = $conn->query($sql);
 
         while($row = $result->fetch()){
@@ -30,6 +30,7 @@ function show_users($user){
             $data[] = $row['email'];
             $data[] = $row['profile_img'];
             $data[] = $row['created_at'];
+            $data[] = $row['enabled'];
         }
         closeConnection($conn);
     }
