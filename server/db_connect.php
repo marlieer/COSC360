@@ -10,7 +10,6 @@ function openConnection(){
 
 function closeConnection($pdo){
     $pdo = null;
-    echo "Connection is closed";
 }
 
 ?>
