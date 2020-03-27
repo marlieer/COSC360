@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,4 +70,15 @@
             </ul>
         </div>
     </nav>
+    <?php
+    if(isset($_SESSION['message'])){
+        echo '<p class="message entry">' . $_SESSION['message'] . '</p>';
+        unset($_SESSION['message']);
+    }
+
+    if(isset($_SESSION['warning'])){
+        echo '<p class="warning entry">' . $_SESSION['warning'] . '</p>';
+        unset($_SESSION['warning']);
+    }
+    ?>
 </header>

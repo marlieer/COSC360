@@ -124,6 +124,11 @@ td, th{
     width: max-content;
 }
 
+.clicked-btn {
+    border: 1pt solid darkblue;
+    color: white;
+}
+
 .delete-btn, .delete-btn:hover {
     background-color: darkred;
     color: #F2F2F2;
@@ -154,6 +159,21 @@ td, th{
     font-family: Nunito, sans-serif;
     font-size: 1.2em;
     font-weight: lighter;
+}
+
+.message {
+    background-color: lightgreen;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 1em;
+    border: 1px solid green;
+}
+.warning {
+    background-color: lightcoral;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 1em;
+    border: 1px solid darkred;
 }
 
 .my-btn, .my-btn:hover {
