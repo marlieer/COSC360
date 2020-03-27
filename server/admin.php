@@ -50,10 +50,10 @@ if(isset($_GET['id']) && isset($_GET['enabled'])){
         }
     }
     if($en == 0){
-        echo "<script>alert('User $id' has be deactivated.)</script>";
+        echo "<script>alert('User $id has be deactivated.')</script>";
     }
     elseif($en == 1){
-        echo "<script>alert('User $id' has be activated.)</script>";
+        echo "<script>alert('User $id has be activated.')</script>";
     }
     // redirect to profile page after
     echo "<script>window.location='../client/users/show.php?id=$id'</script>";
@@ -81,5 +81,100 @@ if(isset($_GET['id']) && isset($_GET['delete'])){
         echo "<script>window.location='../client/admin/index.php'</script>";
     }
 }
+
+// -------------------------------------------------------------------------------
+// for ADMIN ANALYTICS
+// -------------------------------------------------------------------------------
+function get_top_5(){
+    $data = [];
+    try{
+        $conn = openConnection();
+        $sql = "SELECT category, SUM(views) AS total_views FROM posts GROUP BY category ORDER BY SUM(views) DESC LIMIT 5";
+        $result = $conn->query($sql);
+        while($row = $result->fetch()){
+            $data[] = array($row['category'], $row['total_views']);
+        }
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }
+
+    return $data;
+}
+
+function get_reg_users(){
+    $data = '';
+    try{
+        $conn = openConnection();
+        $sql = "SELECT COUNT(*) AS total_users FROM users";
+        $result = $conn->query($sql);
+        while($row = $result->fetch()){
+            $data = $row['total_users'];
+        }
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }
+    
+    return $data;
+}
+
+function get_active_users(){
+    $data = '';
+    $time = strtotime("-3 year", time());
+    $date = date("Y-m-d", $time);
+    try{
+        $conn = openConnection();
+        $sql = "SELECT COUNT(*) AS total_users FROM users WHERE last_login>$date";
+        $result = $conn->query($sql);
+        while($row = $result->fetch()){
+            $data = $row['total_users'];
+        }
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }
+    
+    return $data;
+}
+
+function get_monthly_new_users(){
+    $data = [];
+    try{
+        $conn = openConnection();
+        $sql = "SELECT COUNT(*) AS total_users, YEAR(created_at) as yearly,  MONTH(created_at) AS monthly FROM users GROUP BY yearly, monthly ORDER BY yearly ASC, monthly ASC";
+        $result = $conn->query($sql);
+        while($row = $result->fetch()){
+            $data = array($row['total_users'], $row['yearly'], $row['monthly']);
+        }
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }
+    
+    return $data;
+}
+
+function get_en_users(){
+    $data = [];
+    try{
+        $conn = openConnection();
+        $sql = "SELECT COUNT(*) AS total_users, enabled FROM users GROUP BY enabled";
+        $result = $conn->query($sql);
+        while($row = $result->fetch()){
+            $data = array($row['total_users'], $row['enabled']);
+        }
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }
+
+    return $data;
+    }
 
 ?>
