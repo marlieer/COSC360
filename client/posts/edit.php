@@ -1,7 +1,7 @@
 <?php
 
 include '../top.php';
-include '../../db_connection.php';
+include '../../server/db_connect.php';
 
 $valid = true;
 $_SESSION['userID'] = -1;

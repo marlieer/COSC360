@@ -1,5 +1,5 @@
 <?php
-include "../db_connection.php";
+include "db_connect.php";
 if (isset($_GET['userID']) && isset($_GET['postID'])) {
 
     $isValid = true;

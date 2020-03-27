@@ -1,6 +1,6 @@
 <?php
 include '../top.php';
-include '../../db_connection.php';
+include '../../server/db_connect.php';
 
 $query="";
 parse_str($_SERVER['QUERY_STRING'], $params);

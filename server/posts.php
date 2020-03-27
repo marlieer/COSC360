@@ -1,5 +1,5 @@
 <?php
-include '../db_connection.php';
+include 'db_connect.php';
 include '../client/top.php';
 
 $pdo = openConnection();
@@ -7,7 +7,7 @@ $isValidForm = true;
 $errors = array();
 
 // validate that user is logged in
-if (!isset($_SESSION["userID"])) {
+if (!isset($_SESSION["id"])) {
     $_SESSION['warning'] = "You must be logged in to perform this action";
 
     // redirect to login
