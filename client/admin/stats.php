@@ -19,18 +19,16 @@
         </div>
         <div class="stat">
             <h3>Number of Enabled/Disabled Users</h3>
-            <p>1000 people</p>
+            <div id="pie_chart"></div>
         </div>
         <div class="stat">
             <h3>Number of Active Users</h3>
             <p><?php echo get_active_users(); ?></p>
         </div>
-       
-        
     </div>
     <div class="stat-graph">
         <h3>Number of New Users per Month</h3>
-        <img src="examples/newusers.jpg"/>
+        <div id="bar_chart"></div>
     </div>
 </main>
 <?php include '../bottom.php' ?>

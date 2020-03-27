@@ -141,32 +141,14 @@ function get_active_users(){
     return $data;
 }
 
-function get_monthly_new_users(){
-    $data = [];
-    try{
-        $conn = openConnection();
-        $sql = "SELECT COUNT(*) AS total_users, YEAR(created_at) as yearly,  MONTH(created_at) AS monthly FROM users GROUP BY yearly, monthly ORDER BY yearly ASC, monthly ASC";
-        $result = $conn->query($sql);
-        while($row = $result->fetch()){
-            $data = array($row['total_users'], $row['yearly'], $row['monthly']);
-        }
-        closeConnection($conn);
-    }
-    catch(PDOException $err){
-        die($err->getMessage());
-    }
-    
-    return $data;
-}
-
 function get_en_users(){
     $data = [];
     try{
         $conn = openConnection();
-        $sql = "SELECT COUNT(*) AS total_users, enabled FROM users GROUP BY enabled";
+        $sql = "SELECT COUNT(*) AS total_users, enabled FROM users GROUP BY enabled ORDER BY enabled DESC";
         $result = $conn->query($sql);
         while($row = $result->fetch()){
-            $data = array($row['total_users'], $row['enabled']);
+            $data[] = array($row['total_users'], $row['enabled']);
         }
         closeConnection($conn);
     }
@@ -178,3 +160,63 @@ function get_en_users(){
     }
 
 ?>
+
+ <!--
+ -------------------------------------------------------------------------------
+ for ADMIN ANALYTICS
+ -------------------------------------------------------------------------------
+ -->
+<head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        //--------------------------------------------------------------------------------------
+        // FOR PIE CHART OF ENABLED/DISABLED USERS
+        //--------------------------------------------------------------------------------------
+        // Create the data table
+        var data1 = new google.visualization.DataTable();
+        data1.addColumn('string', 'Status');
+        data1.addColumn('number', 'Users');
+        <?php $data1 = get_en_users(); ?>
+        data1.addRows([
+          ['Enabled', <?php echo $data1[0][0] ?>],
+          ['Disabled', <?php echo $data1[1][0] ?>]
+        ]);
+        // Set chart options
+        var options1 = {'width':400, 'height':300};
+        // Instantiate and draw our chart, passing in some options.
+        var chart1 = new google.visualization.PieChart(document.getElementById('pie_chart'));
+        chart1.draw(data1, options1);
+        
+        //--------------------------------------------------------------------------------------
+        // FOR PIE CHART OF ENABLED/DISABLED USERS
+        //--------------------------------------------------------------------------------------
+        // Create the data table
+        var jsonData = $.ajax({
+        url: "../server/admin_data.php",
+        dataType:"json",
+        async: false
+        }).responseText;
+        var data2 = new google.visualization.DataTable(jsonData);
+        // Set chart options
+        var options2 = {'width':500, 'height':500};
+        // Draw chart
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
+        chart2.draw(data2, options2);
+      }
+    </script>
+
+
+  </head>
