@@ -52,7 +52,7 @@ label {
     margin: 0;
 }
 
-legend {
+legend, .blue-banner {
     text-align: center;
     background-color: #56CCF2;
     color: #333333;
