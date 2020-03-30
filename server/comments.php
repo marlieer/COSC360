@@ -5,6 +5,8 @@ include '../client/top.php';
 // create a comment
 if (isset($_POST['create'])){
     createComment();
+} else if(isset($_POST['delete'])) {
+    deleteComment();
 }
 
 // create a new comment for a post
@@ -15,7 +17,6 @@ function createComment(){
 
     if(isset($_POST['postID'])){
         $postID = $_POST['postID'];
-        echo $postID;
     }
 
     if(isset($_POST['comment'])){
@@ -24,7 +25,6 @@ function createComment(){
 
     if(isset($_SESSION['id'])){
         $userID = $_SESSION['id'];
-        echo $userID;
     }
 
     // insert comment into database
@@ -47,5 +47,43 @@ function createComment(){
         exit();
     }
     else echo "Post ID or User ID are wrong";
+
+}
+
+
+function deleteComment(){
+    $commentID = -1;
+    $userID = -1;
+    $postID= -1;
+
+    if(isset($_POST['commentID'])){
+        $commentID = $_POST['commentID'];
+    }
+
+    if(isset($_POST['postID'])){
+        $postID = $_POST['postID'];
+    }
+
+    if(isset($_SESSION['id'])){
+        $userID = $_SESSION['id'];
+    }
+
+    // insert comment into database
+    if(validateComment($commentID) && validateUser($userID)){
+        $pdo = openConnection();
+        $sql = "DELETE FROM comments WHERE id=?";
+
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(1, $commentID);
+
+        $statement->execute();
+
+        closeConnection($pdo);
+
+        // redirect to post
+        header("Location: ../client/posts/show.php?id=$postID");
+        exit();
+    }
+    else echo "Comment ID or User ID are wrong";
 
 }

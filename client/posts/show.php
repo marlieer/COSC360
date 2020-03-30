@@ -4,6 +4,7 @@ include '../../server/db_connect.php';
 
 $valid = true;
 $admin = false;
+$liked = 'false';
 
 // validate that logged in userID is an integer
 $session_userID = (isset($_SESSION['id'])) ? $_SESSION['id'] : -1;
@@ -101,6 +102,17 @@ else if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
         $statement->bindValue(1, $postID);
         $statement->execute();
         $comments = $statement->fetchAll();
+
+        $sql = "SELECT * FROM likes WHERE post_id=? and user_id=?";
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(1, $postID);
+        $statement->bindValue(2, $session_userID);
+        $statement->execute();
+        $like = $statement->fetchAll();
+
+        if($like) {
+            $liked = 'true';
+        }
     }
     closeConnection($pdo);
 }
@@ -153,10 +165,19 @@ else if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
                                     href="users/show.php?id=<?php echo $comment['user_id']; ?>"><?php if ($user) {
                                     echo $user[0];
                                 } ?></a></p>
+
                         <p class='comment-date'>
                             <time><?php echo date("F j, Y", strtotime($comment['created_at'])); ?></time>
                         </p>
+                        <?php if($admin) { ?>
+                            <form method="post" action="../server/comments.php">
+                                <input type="hidden" name="commentID" value="<?php echo $comment['id'];?>"/>
+                                <input type="hidden" name="postID" value="<?php echo $postID;?>"/>
+                                <button class="btn-info" type="submit" style="float: right;" name="delete">Delete</button>
+                            </form>
+                        <?php } ?>
                         <p class='comment-body'><?php echo $comment['comment']; ?></p>
+
                     </article>
                 <?php }
             } ?>
@@ -169,6 +190,8 @@ else if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
     var post_userID = '<?php echo $post_userID?>';
     var postID = '<?php echo $postID ?>';
     var title = '<?php echo $title ?>';
+    var liked = '<?php echo $liked ?>';
+    var command;
 
     var editButton = $('#edit');
 
@@ -177,19 +200,36 @@ else if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
         editButton.remove();
         $('.make-comment').remove();
     }
+
     // if the logged in user is not the author of the post, change the edit button to "like"
     else if (userID !== post_userID) {
-        editButton.removeAttr("href").html("Like").click(function () {
+
+        if (liked === "true"){
+            editButton.html("Liked").addClass('clicked-btn');
+            command = "remove";
+        } else {
+            editButton.html("Like").removeClass('clicked-btn');
+            command = "add";
+        }
+
+        editButton.removeAttr("href").click(function () {
 
             $.ajax({
                 type: "GET",
                 data: {
                     userID: userID,
                     postID: postID,
+                    command: command,
                 },
                 url: "../server/likes.php",
-                success: function () {
-                    editButton.addClass('clicked-btn').html('Liked');
+                success: function (result) {
+                    if (result === "add"){
+                        editButton.addClass('clicked-btn').html('Liked');
+                        command = "remove";
+                    } else if (result === "remove") {
+                        editButton.removeClass('clicked-btn').html('Like');
+                        command = "add";
+                    }
                 }
             });
         });
