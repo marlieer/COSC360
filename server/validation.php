@@ -53,6 +53,32 @@ function validatePost($id){
 }
 
 
+function validateComment($id){
+
+    // check that id is a valid integer
+    if (!filter_var($id, FILTER_VALIDATE_INT)) {
+        echo "<p>That is not a valid comment. Please try again</p>";
+    }
+
+    // check that id belongs to a post
+    else {
+        $pdo = openConnection();
+
+        $sql = "SELECT * FROM comments WHERE id=?";
+        $statement = $pdo->prepare($sql);
+        $statement->bindValue(1, $id);
+        $statement->execute();
+        $result = $statement->fetch();
+
+        if($result){
+            closeConnection($pdo);
+            return true;
+        }
+    }
+    return false;
+}
+
+
 function sanitizeText($text){
     return filter_var($text, FILTER_SANITIZE_STRING);
 }
