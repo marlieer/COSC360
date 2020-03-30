@@ -206,11 +206,15 @@ function db_forget($email){
         // use wordwrap() if lines are longer than 70 characters
         $msg = wordwrap($msg,70);
         // send email
-        //mail($email, "Mates & Posts - Password Recovery",$msg);
-        echo $msg;
-        echo "Recovery password email sent.";
-        echo "<script>alert('Redirecting to user login page')</script>";
-        echo "<script>window.location='../client/auth/login.php'</script>";
+        if(mail($email, "Mates & Posts - Password Recovery",$msg)){
+            echo $msg;
+            echo "Recovery password email sent.";
+            echo "<script>alert('Recovery password email sent. Please check email.')</script>";
+            //echo "<script>window.location='../client/auth/login.php'</script>";
+        }
+        else{
+            echo "Message could not be sent.";
+        }
     }
     else{
         echo "<script>alert('The email was not found.')</script>";

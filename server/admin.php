@@ -5,6 +5,16 @@ include "db_connect.php";
 // -------------------------------------------------------------------------------
 // for SHOWING ALL REGISTERED USERS page
 // -------------------------------------------------------------------------------
+
+if(isset($_POST['search_button'])){
+    if(empty($_POST['search_type']) || empty($_POST['search_text']) || $_POST['search_type'] == ''){
+        echo "<script>window.location='../client/admin/index.php'</script>";
+    }
+    else{
+        echo "<script>window.location='../client/admin/index.php?type=".$_POST['search_type']."&search=".$_POST['search_text']."'</script>";
+    }
+}
+
 function show_all_users(){
     $data = [];
     try{
@@ -20,6 +30,34 @@ function show_all_users(){
         die($err->getMessage());
     }
 
+    foreach($data as $key=>$val){
+        echo "<article class='entry'><a href='users/show.php?id=$key'>";
+        echo "<p class='main-title'><strong>$val[0]</strong></p>";
+        echo "<p class='main-body'>$val[1]</p>";
+        echo "</a></article>";
+    }
+}
+
+function show_users_by($type, $search){
+    $data = [];
+    try{
+        $conn = openConnection();
+        $sql='';
+        if(strcmp($type, 'email') == 0 || strcmp($type, 'name') == 0){
+            $sql = "SELECT id, name, email FROM users WHERE ".$type." LIKE '%".$search."%'";
+        }
+        elseif(strcmp($type, 'post') == 0){
+            $sql = "SELECT users.id, users.name, users.email FROM users JOIN posts on users.id=posts.user_id WHERE title LIKE '%".$search."%'";
+        }
+        $result = $conn->query($sql);
+        while($row = $result->fetch()){
+            $data[$row['id']] = array($row['name'], $row['email']);
+        }
+        closeConnection($conn);
+    }
+    catch(PDOException $err){
+        die($err->getMessage());
+    }
     foreach($data as $key=>$val){
         echo "<article class='entry'><a href='users/show.php?id=$key'>";
         echo "<p class='main-title'><strong>$val[0]</strong></p>";
