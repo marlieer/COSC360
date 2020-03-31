@@ -5,15 +5,6 @@
     <main class="container">
         <section>
             <h2><?php echo $data[1]; ?></h2>
-            <?php
-                if($data[6] == 1){
-                    echo "<a href='../server/admin.php?enabled=0&id=$data[0]'>Disable User</a>";
-                }
-                else{
-                    echo "<a href='../server/admin.php?enabled=1&id=$data[0]'>Enable User</a>";
-                }
-            ?>
-            <a href="../server/admin.php?delete=1&id=<?php echo $data[0]; ?>">Delete Profile</a>
             <img src="<?php echo $data[4]; ?>" alt="<?php echo $data[1]; ?>" class="profile-pic"/>
             <table class="table">
                 <tr>

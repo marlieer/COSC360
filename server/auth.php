@@ -177,15 +177,17 @@ function str_input($data) {
     return $data;
 }
 
-// TODO: email password 
+// email password 
+// NOTE - on google for mates and posts account must have turn on less authorized apps access
+// also to turn off fire wall
 function db_forget($email){
     $check = 0;
 
     try{
         $conn = openConnection();
 
-        $email = $conn->quote($email);
-        $sql = "SELECT name, password FROM users WHERE email=$email";
+        $sqlemail = $conn->quote($email);
+        $sql = "SELECT name, password FROM users WHERE email=$sqlemail";
         $result = $conn->query($sql);
 
         while($row = $result->fetch()){
@@ -201,19 +203,20 @@ function db_forget($email){
     }  
     if($check == 1)   {
         // the message
-        $msg = "Hi $name,\n Here is your password: $password\n If you did not request for password recovery, please ignore.\nRegards, Admin";
+        $msg = "Hi $name,\nHere is your password: $password\nRegards,\nAdmin";
     
         // use wordwrap() if lines are longer than 70 characters
-        $msg = wordwrap($msg,70);
         // send email
         if(mail($email, "Mates & Posts - Password Recovery",$msg)){
             echo $msg;
             echo "Recovery password email sent.";
             echo "<script>alert('Recovery password email sent. Please check email.')</script>";
-            //echo "<script>window.location='../client/auth/login.php'</script>";
+            echo "<script>window.location='../client/auth/login.php'</script>";
         }
         else{
             echo "Message could not be sent.";
+            echo "<script>alert('Recovery password email was not sent. Please try again later.')</script>";
+            echo "<script>window.location='../client/auth/forgotpassword.php'</script>";
         }
     }
     else{

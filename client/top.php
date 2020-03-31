@@ -56,14 +56,16 @@
                         echo '</a>';
                         echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
                         echo '<a class="dropdown-item" href="users/myprofile.php">Profile</a>';
-                        echo '<a class="dropdown-item" href="../server/logout.php">Logout</a>';
                         echo '<a class="dropdown-item" href="#">Settings</a>';
                         echo '</div>';
+                        echo '</li>';
+                        echo '<li>';
+                        echo '<a class="dropdown-item" href="../server/logout.php"><img src="icons/log-out.svg"/></a>';
                         echo '</li>';
                     }
                     else{
                         echo '<li class="nav-item">';
-                        echo '<a class="nav-link" href="auth/login.php">Login</a>';
+                        echo '<a class="nav-link" href="auth/login.php"><img src="icons/log-in.svg"/></a>';
                         echo '</li>';
                     }
                 ?>
