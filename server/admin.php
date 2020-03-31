@@ -19,10 +19,10 @@ function show_all_users(){
     $data = [];
     try{
         $conn = openConnection();
-        $sql = "SELECT id, name, email FROM users";
+        $sql = "SELECT id, name, email, enabled FROM users";
         $result = $conn->query($sql);
         while($row = $result->fetch()){
-            $data[$row['id']] = array($row['name'], $row['email']);
+            $data[$row['id']] = array($row['name'], $row['email'], $row['enabled']);
         }
         closeConnection($conn);
     }
@@ -31,10 +31,25 @@ function show_all_users(){
     }
 
     foreach($data as $key=>$val){
+        echo "<tr>";
+        echo "<td>";
+        if($val[2]==0){
+            echo "<a href='../server/admin.php?enabled=1&id=$key'><img src='icons/user-plus.svg'/></a>";
+        }
+        else{
+            echo "<a href='../server/admin.php?enabled=0&id=$key'><img src='icons/user-minus.svg'/></a>";
+        }
+        echo "</td>";
+        echo "<td>";
+        echo "<a href='../server/admin.php?delete=1&id=$key'><img src='icons/user-x.svg'/></a>";
+        echo "</td>";
+        echo "<td>";
         echo "<article class='entry'><a href='users/show.php?id=$key'>";
         echo "<p class='main-title'><strong>$val[0]</strong></p>";
         echo "<p class='main-body'>$val[1]</p>";
         echo "</a></article>";
+        echo "</td>";
+        echo "</tr>";
     }
 }
 
@@ -44,14 +59,14 @@ function show_users_by($type, $search){
         $conn = openConnection();
         $sql='';
         if(strcmp($type, 'email') == 0 || strcmp($type, 'name') == 0){
-            $sql = "SELECT id, name, email FROM users WHERE ".$type." LIKE '%".$search."%'";
+            $sql = "SELECT users.id, name, email, enabled FROM users WHERE ".$type." LIKE '%".$search."%'";
         }
         elseif(strcmp($type, 'post') == 0){
-            $sql = "SELECT users.id, users.name, users.email FROM users JOIN posts on users.id=posts.user_id WHERE title LIKE '%".$search."%'";
+            $sql = "SELECT users.id, name, email, enabled FROM users JOIN posts on users.id=posts.user_id WHERE title LIKE '%".$search."%'";
         }
         $result = $conn->query($sql);
         while($row = $result->fetch()){
-            $data[$row['id']] = array($row['name'], $row['email']);
+            $data[$row['id']] = array($row['name'], $row['email'], $row['enabled']);
         }
         closeConnection($conn);
     }
@@ -59,10 +74,25 @@ function show_users_by($type, $search){
         die($err->getMessage());
     }
     foreach($data as $key=>$val){
+        echo "<tr>";
+        echo "<td>";
+        if($val[2]==0){
+            echo "<a href='../server/admin.php?enabled=1&id=$key'><img src='icons/user-plus.svg'/></a>";
+        }
+        else{
+            echo "<a href='../server/admin.php?enabled=0&id=$key'><img src='icons/user-minus.svg'/></a>";
+        }
+        echo "</td>";
+        echo "<td>";
+        echo "<a href='../server/admin.php?delete=1&id=$key'><img src='icons/user-x.svg'/></a>";
+        echo "</td>";
+        echo "<td>";
         echo "<article class='entry'><a href='users/show.php?id=$key'>";
         echo "<p class='main-title'><strong>$val[0]</strong></p>";
         echo "<p class='main-body'>$val[1]</p>";
         echo "</a></article>";
+        echo "</td>";
+        echo "</tr>";
     }
 }
 
@@ -94,7 +124,7 @@ if(isset($_GET['id']) && isset($_GET['enabled'])){
         echo "<script>alert('User $id has be activated.')</script>";
     }
     // redirect to profile page after
-    echo "<script>window.location='../client/users/show.php?id=$id'</script>";
+    echo "<script>window.location='../client/admin/index.php'</script>";
 }
 
 if(isset($_GET['id']) && isset($_GET['delete'])){
@@ -114,7 +144,7 @@ if(isset($_GET['id']) && isset($_GET['delete'])){
             die($err->getMessage());
         }
 
-        echo "<script>alert('User $id' has be deleted.)</script>";
+        echo "<script>alert('User $id has be deleted.')</script>";
         // redirect to profile page after
         echo "<script>window.location='../client/admin/index.php'</script>";
     }

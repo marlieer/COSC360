@@ -5,7 +5,7 @@
     <main class="container">
         <section>
             <h2><?php echo $data[1]; ?></h2>
-            <a href="users/edit.php" class="center">Edit Profile</a>
+            <a href="users/edit.php" style="display: block; text-align: center;"><img src="icons/edit.svg"/></a>
             <img src="<?php echo $data[4]; ?>" alt="<?php echo $data[1]; ?>" class="profile-pic"/>
             <table class="table">
                 <tr>
