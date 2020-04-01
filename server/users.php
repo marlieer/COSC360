@@ -45,7 +45,7 @@ function show_posts($user){
     $data = [];
     try{
         $conn = openConnection();
-        $sql = "SELECT id, title, body FROM posts WHERE id=$user";
+        $sql = "SELECT id, title, body FROM posts WHERE user_id=$user";
         $result = $conn->query($sql);
         while($row = $result->fetch()){
             $data[$row['id']] = array($row['title'], $row['body']);
