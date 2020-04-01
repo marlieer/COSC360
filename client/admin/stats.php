@@ -31,7 +31,7 @@ th,td{
             <td rowspan="3"><div id="bar_chart"></div></td>
         </tr>
         <tr>
-            <th class="th-1">Top 5 Searched Topics</th>
+            <th class="th-1">Top 5 Viewd Categories</th>
             <td>
                 <ol>
                 <?php $data = get_top_5();
