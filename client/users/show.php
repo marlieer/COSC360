@@ -22,7 +22,7 @@
             </table>
         </section>
         <section id="user-posts">
-            <?php show_posts($data[0]); ?>
+            <?php show_posts($_GET['id']); ?>
         </section>
     </main>
 <?php include '../bottom.php'; ?>
