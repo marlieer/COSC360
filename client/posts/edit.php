@@ -53,7 +53,7 @@ $result = $statement->fetch();
                     <div class="container">
                         <button class="btn my-btn" name="edit" type="submit">publish</button>
                         <a href="posts/show.php?id=<?php echo $postID;?>" class="btn my-btn cancel-btn">cancel</a>
-                        <button class="btn my-btn delete-btn" name="delete" type="submit" onclick="confirm('Are you sure?')">delete</button>
+                        <button class="btn my-btn delete-btn" name="delete" type="submit" onsubmit="confirm('Are you sure?')">delete</button>
                     </div>
                 </fieldset>
             </form>

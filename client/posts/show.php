@@ -122,6 +122,11 @@ else if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
         <div class="post-meta-info">
 
             <a id="edit" href="<?php echo $edit_href ?>" class="btn my-btn edit">Edit</a>
+            <?php if($admin) { ?>
+                <form method="post" action="../server/posts.php?id=<?php echo $postID; ?>">
+                    <button class="btn my-btn edit" name="delete" type="submit">delete</button>
+                </form>
+            <?php } ?>
             <h1 class="post-title"><?php echo $title ?></h1>
             <p>
                 <?php if ($categories !== null) {
@@ -191,16 +196,17 @@ else if (!filter_var($session_userID, FILTER_VALIDATE_INT)) {
     var postID = '<?php echo $postID ?>';
     var title = '<?php echo $title ?>';
     var liked = '<?php echo $liked ?>';
+    var admin = '<?php if($admin) echo 'true'; else echo 'false'; ?>';
+
     var command;
 
     var editButton = $('#edit');
 
     // if user is not logged in, remove edit/like button
-    if (userID === "-1" || title === "POST NOT FOUND") {
+    if (userID === "-1" || title === "POST NOT FOUND" || admin === 'true') {
         editButton.remove();
         $('.make-comment').remove();
     }
-
     // if the logged in user is not the author of the post, change the edit button to "like"
     else if (userID !== post_userID) {
 
